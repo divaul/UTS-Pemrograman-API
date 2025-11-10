@@ -12,7 +12,7 @@ class MahasiswaFactory extends Factory
     {
         return [
             'nama' => $this->faker->name(),
-            'nim' => date('Y') . $this->faker->unique()->numerify('######'),
+            'nim' => date('Y') . $this->faker->unique()->numerify('######'), 
         ];
     }
 }

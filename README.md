@@ -1,59 +1,240 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API Mahasiswa - Laravel REST API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi REST API untuk mengelola data mahasiswa menggunakan Laravel dengan autentikasi Laravel Sanctum.
 
-## About Laravel
+## 📋 Deskripsi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+API ini menyediakan endpoint untuk:
+- Autentikasi pengguna dengan token
+- Mengelola data mahasiswa (Create, Read, Update, Delete)
+- Pencarian mahasiswa berdasarkan nama dan NIM
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Teknologi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Laravel 12.x** - PHP Framework
+- **Laravel Sanctum** - API Authentication
+- **SQLite** - Database
+- **PHP 8.2+** - Programming Language
 
-## Learning Laravel
+## 📦 Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Prasyarat
+- PHP >= 8.2
+- Composer
+- SQLite
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Langkah Instalasi
 
-## Laravel Sponsors
+1. **Clone Repository**
+```bash
+git clone <repository-url>
+cd <project-folder>
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Install Dependencies**
+```bash
+composer install
+```
 
-### Premium Partners
+3. **Konfigurasi Environment**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. **Konfigurasi Database**
 
-## Contributing
+Edit file `.env`:
+```env
+DB_CONNECTION=SQLite
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Jalankan Migration & Seeder**
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## Code of Conduct
+6. **Jalankan Server**
+```bash
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Server akan berjalan di `http://localhost:8000`
 
-## Security Vulnerabilities
+## 🔑 API Endpoints
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Base URL
+```
+http://localhost:8000/api
+```
 
-## License
+### Authentication
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Login
+```http
+POST /api/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Login berhasil",
+  "token": "1|xxxxxxxxxxxxxxxxxxxxx",
+  "user": {
+    "id": 1,
+    "email": "user@example.com"
+  }
+}
+```
+
+### Mahasiswa Endpoints
+
+**Semua endpoint mahasiswa memerlukan autentikasi. Sertakan token di header:**
+```
+Authorization: Bearer {token}
+```
+
+#### 1. Get All Mahasiswa
+```http
+GET /api/mahasiswa
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Data mahasiswa berhasil diambil",
+  "total": 10,
+  "data": [
+    {
+      "id": 1,
+      "nama": "John Doe",
+      "nim": "2025123456",
+      "created_at": "2025-11-10T10:00:00.000000Z",
+      "updated_at": "2025-11-10T10:00:00.000000Z"
+    }
+  ]
+}
+```
+
+#### 2. Get Mahasiswa by ID
+```http
+GET /api/mahasiswa/{id}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Data mahasiswa berhasil diambil",
+  "data": {
+    "id": 1,
+    "nama": "John Doe",
+    "nim": "2025123456",
+    "created_at": "2025-11-10T10:00:00.000000Z",
+    "updated_at": "2025-11-10T10:00:00.000000Z"
+  }
+}
+```
+
+#### 3. Search by Nama
+```http
+GET /api/mahasiswa/nama/{nama}
+```
+
+#### 4. Search by NIM
+```http
+GET /api/mahasiswa/nim/{nim}
+```
+
+## 🗂️ Struktur Database
+
+### Tabel: mahasiswas
+
+| Kolom | Tipe | Deskripsi |
+|-------|------|-----------|
+| id | BIGINT | Primary key (auto increment) |
+| nama | VARCHAR | Nama mahasiswa |
+| nim | VARCHAR | Nomor Induk Mahasiswa (unique) |
+| created_at | TIMESTAMP | Waktu data dibuat |
+| updated_at | TIMESTAMP | Waktu data diupdate |
+
+### Tabel: users
+
+| Kolom | Tipe | Deskripsi |
+|-------|------|-----------|
+| id | BIGINT | Primary key |
+| email | VARCHAR | Email user (unique) |
+| password | VARCHAR | Password (hashed) |
+| created_at | TIMESTAMP | Waktu registrasi |
+| updated_at | TIMESTAMP | Waktu update |
+
+## 🔐 Keamanan
+
+### Token Authentication
+- Menggunakan Laravel Sanctum untuk token-based authentication
+- Token expires dalam 60 menit (dapat dikonfigurasi di `config/sanctum.php`)
+- Setiap login baru akan menghapus token lama
+
+### Mass Assignment Protection
+- Model menggunakan `$fillable` untuk melindungi dari mass assignment vulnerability
+
+### Password Hashing
+- Password di-hash menggunakan bcrypt
+- Validasi password menggunakan `Hash::check()`
+
+## 📝 Contoh Penggunaan
+
+### Menggunakan cURL
+
+**Login:**
+```bash
+curl -X POST http://localhost:8000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password"}'
+```
+
+**Get Mahasiswa:**
+```bash
+curl -X GET http://localhost:8000/api/mahasiswa \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
+### Menggunakan Postman
+
+1. Buat request baru dengan method POST ke `/api/login`
+2. Tambahkan body JSON dengan email dan password
+3. Salin token dari response
+4. Untuk request lain, tambahkan header:
+   - Key: `Authorization`
+   - Value: `Bearer {token}`
+
+## 🧪 Testing
+
+Data dummy mahasiswa akan dibuat otomatis saat menjalankan seeder:
+- 10 mahasiswa dengan nama dan NIM random
+- NIM mengikuti format: `YYYY` + 6 digit angka random
+
+## 🐛 Troubleshooting
+
+### Error: Token Mismatch
+- Pastikan menggunakan token yang valid
+- Cek apakah token sudah expired (default 60 menit)
+- Login ulang untuk mendapatkan token baru
+
+### Error: Database Connection
+- Pastikan konfigurasi database di `.env` sudah benar
+- Pastikan SQLite sudah running
+- Jalankan `php artisan config:clear`
+
+### Error: 404 Not Found
+- Pastikan route sudah terdaftar dengan `php artisan route:list`
+- Cek apakah menggunakan base URL yang benar
