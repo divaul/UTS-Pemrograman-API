@@ -27,8 +27,8 @@ API ini menyediakan endpoint untuk:
 
 1. **Clone Repository**
 ```bash
-git clone <repository-url>
-cd <project-folder>
+git clone https://github.com/divaul/UTS-Pemrograman-API.git
+cd UTS Pemrograman API
 ```
 
 2. **Install Dependencies**
