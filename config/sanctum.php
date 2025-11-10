@@ -38,7 +38,7 @@ return [
     | Untuk production, sebaiknya set nilai tertentu (contoh: 60, 1440)
     |
     */
-    'expiration' => null,
+    'expiration' => 60,
 
     /*
     |--------------------------------------------------------------------------

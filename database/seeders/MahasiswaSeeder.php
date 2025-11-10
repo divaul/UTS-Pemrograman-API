@@ -13,8 +13,8 @@ class MahasiswaSeeder extends Seeder
     public function run(): void
     {
         Mahasiswa::factory()
-            ->count(20)
+            ->count(10)
             ->create();
-        $this->command->info('✅ Berhasil membuat 20 data mahasiswa dummy');
+        $this->command->info('✅ Berhasil membuat 10 data mahasiswa dummy');
     }
 }

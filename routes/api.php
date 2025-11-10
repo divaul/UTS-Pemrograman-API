@@ -11,5 +11,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
     Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/mahasiswa/nama/{nama}', [MahasiswaController::class, 'shiw']);
+    Route::get('/mahasiswa/nim/{nim}', [MahasiswaController::class, 'shaw']);
+
 });

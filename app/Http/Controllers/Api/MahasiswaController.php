@@ -54,4 +54,40 @@ class MahasiswaController extends Controller
             'data' => $mahasiswa,
         ], 200);
     }
+    public function shiw($nama)
+    {
+        $mahasiswa = Mahasiswa::whereRaw('LOWER(nama) LIKE ?', ['%' . strtolower($nama) . '%'])->get();
+
+        if (!$mahasiswa) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mahasiswa tidak ditemukan',
+            ], status: 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data mahasiswa berhasil diambil',
+            'data' => $mahasiswa,
+        ], 200);
+    }
+
+
+    public function shaw($nim)
+    {
+        $mahasiswa = Mahasiswa::whereRaw('LOWER(nim) LIKE ?', ['%' . strtolower($nim) . '%'])->get();
+
+        if (!$mahasiswa) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mahasiswa tidak ditemukan',
+            ], status: 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data mahasiswa berhasil diambil',
+            'data' => $mahasiswa,
+        ], 200);
+    }
 }
